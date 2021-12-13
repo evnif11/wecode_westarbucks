@@ -1,17 +1,17 @@
 from django.db import models
 
-class Drink(models.Model):
+class Product(models.Model):
     korean_name = models.CharField(max_length=100)
     english_name = models.CharField(max_length=100)
     description = models.TextField()
     category = models.ForeignKey('Category', on_delete=models.CASCADE)
     allergy = models.ManyToManyField('Allergy')
-    nutritions = models.ManyToManyField('Size', through='Nutrition')
+    sizes = models.ManyToManyField('Size', through="Nutrition")
 
     def __str__(self) -> str:
         return self.korean_name
     class Meta:
-        db_table = 'drinks'
+        db_table = 'products'
 
 
 class Category(models.Model):
@@ -34,8 +34,8 @@ class Menu(models.Model):
 
 
 class Image(models.Model):
-    url = models.TextField()
-    drink = models.ForeignKey(Drink, on_delete=models.CASCADE)
+    url = models.URLField()
+    product = models.ForeignKey(Product, on_delete=models.CASCADE)
     class Meta:
         db_table = 'images'
 
@@ -50,18 +50,14 @@ class Allergy(models.Model):
 
 
 class Nutrition(models.Model):
-    one_serving_kcal = models.IntegerField(null=True)
-    sodium_mg = models.IntegerField(null=True)
-    saturated_fat_g = models.IntegerField(null=True)
-    sugars_g = models.IntegerField(null=True)
-    protein_g = models.IntegerField(null=True)
-    caffeine_mg = models.IntegerField(null=True)
-    drink = models.ForeignKey(Drink, on_delete=models.CASCADE, null=True)
+    one_serving_kcal = models.DecimalField(max_digits=10, decimal_places=2, null=True)
+    sodium_mg = models.DecimalField(max_digits=10, decimal_places=2,null=True)
+    saturated_fat_g = models.DecimalField(max_digits=10, decimal_places=2,null=True)
+    sugars_g = models.DecimalField(max_digits=10, decimal_places=2,null=True)
+    protein_g = models.DecimalField(max_digits=10, decimal_places=2,null=True)
+    caffeine_mg = models.DecimalField(max_digits=10, decimal_places=2,null=True)
+    Product = models.ForeignKey(Product, on_delete=models.CASCADE, null=True)
     size = models.ForeignKey('Size', on_delete=models.CASCADE, null=True)
-
-    def __str__(self) -> str:
-        return self.one_serving_kcal
-
     class Meta:
         db_table = 'nutritions'
 
