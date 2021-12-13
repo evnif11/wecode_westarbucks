@@ -41,7 +41,7 @@ MIDDLEWARE = [
     'corsheaders.middleware.CorsMiddleware',
 ]
 
-ROOT_URLCONF = 'westargram.urls'
+ROOT_URLCONF = 'westarbucks.urls'
 
 TEMPLATES = [
     {
@@ -59,7 +59,7 @@ TEMPLATES = [
     },
 ]
 
-WSGI_APPLICATION = 'westargram.wsgi.application'
+WSGI_APPLICATION = 'westarbucks.wsgi.application'
 
 
 # Database
